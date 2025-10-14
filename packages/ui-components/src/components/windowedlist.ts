@@ -421,6 +421,10 @@ export abstract class WindowedListModel implements WindowedList.IModel {
         return currentOffset;
       } else if (alignPreference !== undefined) {
         align = alignPreference;
+      } // If the item is larger than the viewport, prefer align to the top
+      // to avoid oscillating between top/bottom positions.
+      else if (itemMetadata.size > size) {
+        align = 'start';
       } else if (crossingBottomEdge || bottomEdge <= itemBottom) {
         align = 'end';
       } else {
